@@ -2,14 +2,17 @@ import { useEffect, useState } from "react";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
+  const [search, setSearch] = useState(""); // Added search state
+
   useEffect(() => {
     fetch("http://localhost:3000/posts")
       .then((res) => res.json())
       .then((data) => setPosts(data));
   }, []);
-  const [todos, setTodos] = useState([]); 
-  const filteredTodos = todos.filter((todo) =>
-    todo.title.toLowerCase().includes(search.toLowerCase())
+
+  // Filter posts based on the search term
+  const filteredPosts = posts.filter((post) =>
+    post.body.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -18,15 +21,20 @@ const Posts = () => {
         <div className="title">
           <h1>Our Latest Posts</h1>
           <form>
-            <input required type="search" placeholder="Search" id="search" />
-            <button htmlFor="search"  variant="warning"
-          
-          onClick={() => handleUpdateTodo(todo.id, prompt("New title", todo.title))}>🔍</button>
+            <input
+              required
+              type="search"
+              placeholder="Search"
+              id="search"
+              value={search} // Bind input value to search state
+              onChange={(e) => setSearch(e.target.value)} // Update search state on input change
+            />
+            <button type="button">🔍</button>
           </form>
         </div>
         <div className="cards">
-          {posts.map((post) => (
-            <div className="card">
+          {filteredPosts.map((post) => (
+            <div className="card" key={post.id}>
               <div className="card-img"></div>
               <p className="id">ID: {post.id}</p>
               <h5>{post.body}</h5>
