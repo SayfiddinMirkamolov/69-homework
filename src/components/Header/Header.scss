@@ -1,0 +1,17 @@
+.nav-items {
+  background-color: #109be9;
+  display: flex;
+  gap: 32px;
+  padding-left: 100px;
+  a {
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    padding: 27px 0;
+    font-size: 18px;
+  }
+  a:hover {
+    color: #ff0000;
+    transition: 0.5s;
+  }
+}
